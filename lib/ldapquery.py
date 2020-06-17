@@ -15,7 +15,7 @@ class LdapQuery:
     def fetch(self):
         self.connection.search(**self.config['ldap3']['search'][0])
         test = (dict(self.connection.response[0]['attributes']))
-        print(test)
+        print(self.connection.response)
         return test
 
 
