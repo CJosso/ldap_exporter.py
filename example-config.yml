@@ -1,4 +1,6 @@
 ---
+
+# Ldap connections options (see)
 ldap3:
 
   server:
@@ -9,7 +11,7 @@ ldap3:
 
   connection:
     user: 'cn=Directory Manager'
-    password: 'youAmazingPassword'
+    password: 'azerty'
 
   search:
     - search_base: 'cn=monitor'
@@ -17,3 +19,36 @@ ldap3:
       search_filter: '(objectclass=*)'
       attributes: '*'
 
+# Flask (web server) options
+flask:
+  app:
+    port: 9325
+    host: 'localhost'
+    debug: True
+
+
+prometheus:
+  metrics:
+    - name: 'cn=monitor'
+      mono_values:
+        counters_help_label: "Compteur depuis le monitoring général"
+        counters:
+        - 'bytessent'
+        - 'entriessent'
+        - 'opscompleted'
+        - 'opsinitiated'
+        - 'totalconnections'
+        
+        gauges_help_label: "Jauges depuis le monitoring général"
+        gauges:
+        - 'cache-avail-bytes'
+        - 'connectionpeak'
+        - 'currentconnections'
+        - 'currentpsearches'
+        - 'dtablesize'
+        - 'heapmaxhighhits'
+        - 'heapmaxlowhits'
+        - 'nbackends'
+        - 'readwaiters'
+        - 'request-que-backlog'
+        - 'threads'
