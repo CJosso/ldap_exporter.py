@@ -1,0 +1,19 @@
+---
+ldap3:
+
+  server:
+    host: 'localhost'
+    port: 389
+    use_ssl: False
+    get_info: ALL
+
+  connection:
+    user: 'cn=Directory Manager'
+    password: 'youAmazingPassword'
+
+  search:
+    - search_base: 'cn=monitor'
+      search_scope: 'BASE'
+      search_filter: '(objectclass=*)'
+      attributes: '*'
+
