@@ -3,7 +3,7 @@ from lib.ldapquery import LdapQuery
 from os import path
 import yaml
 
-app = Flask(__name__)
+app = Flask('Ldap_exporter')
 configFile = path.join(app.root_path, 'config.yml')
 stream = open(configFile, 'r')
 config = yaml.safe_load(stream)
@@ -17,8 +17,7 @@ def root():
 def metrics():
     ldapQuery = LdapQuery(config)
     metrics = ldapQuery.fetch()
-    page = metrics
-    return page
+    return metrics
 
 if __name__ == '__main__':
     app.run(**config['flask']['app'])
