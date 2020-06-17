@@ -1,13 +1,12 @@
 from ldap3 import Server, Connection, ALL
-import yaml
 
 
 
 class LdapQuery:
     """A simple Ldap wrapper class"""
 
-    def __init__(self, configFile):
-        self.config = self.configInit(configFile)
+    def __init__(self, config):
+        self.config = config
         self.server = Server(**self.config['ldap3']['server'])
         self.connection = Connection(self.server, **self.config['ldap3']['connection'])
         self.connection.bind()
@@ -18,7 +17,3 @@ class LdapQuery:
         print(self.connection.response)
         return test
 
-
-    def configInit(self, configFile):
-        stream = open(configFile, 'r')
-        return yaml.safe_load(stream)
