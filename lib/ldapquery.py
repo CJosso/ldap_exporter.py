@@ -17,7 +17,6 @@ class LdapQuery:
         for search in self.config['ldap3']['search']:
             self.connection.search(**search)
             attributesText = (dict(self.connection.response[0]['attributes']))
-            print(self.connection.response[0]['dn'])
             searchBase = search['search_base']
             formattedMetrics += self.formatAttributes(attributesText, searchBase)
         
@@ -46,7 +45,6 @@ def formatValues(configMetric, attributesText):
         if 'gauge' in monoValues:
             beautifulMetric += formatMonoValues(monoValues, attributesText, configMetric['name'], 'gauge')
 
-#    print(configMetric, attributesText)
     return beautifulMetric
 
 def formatMonoValues(monoValues, attributesText, name, valueType):

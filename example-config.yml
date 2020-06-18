@@ -48,14 +48,14 @@ prometheus:
     - name: 'ldap_monitor'
       search_base: 'cn=monitor'
       mono_values:
-        counter_help_label: "Compteur depuis le monitoring général"
+        counter_help_label: "Compteur depuis le monitoring general"
         counter:
         - 'bytessent'
         - 'entriessent'
         - 'opscompleted'
         - 'opsinitiated'
         - 'totalconnections'
-        gauge_help_label: "Jauges depuis le monitoring général"
+        gauge_help_label: "Jauges depuis le monitoring general"
         gauge:
         - 'cache-avail-bytes'
         - 'connectionpeak'
