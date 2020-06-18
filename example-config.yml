@@ -34,11 +34,6 @@ ldap3:
       search_filter: '(objectclass=*)'
       attributes: '*'
 
-    - search_base: 'cn=monitor,cn=ent-bretagne,cn=ldbm database,cn=plugins,cn=config'
-      search_scope: 'BASE'
-      search_filter: '(objectclass=*)'
-      attributes: '*'
-
 # Flask web server options (https://flask.palletsprojects.com/en/1.1.x/)
 flask:
   app:
