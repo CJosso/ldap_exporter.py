@@ -4,7 +4,7 @@ Simple Prometheus exporter for LDAP written in Python3
 
 # Prerequisite
 
-- Python3 (v3.6 tested)
+- python3 (v3.6 tested)
 - pip
 
 # Limitations
@@ -23,6 +23,10 @@ git clone https://github.com/CJosso/ldap_exporter.py.git
 cd ldap_exporter.py
 pip install -r requirements.txt
 ```
+
+# Launch
+
+` # python app.py `
 
 # Usage
 
