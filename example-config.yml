@@ -1,6 +1,6 @@
 ---
 
-# Ldap connections options (see)
+# Ldap connections options (https://pypi.org/project/ldap3/)
 ldap3:
 
   server:
@@ -19,28 +19,49 @@ ldap3:
       search_filter: '(objectclass=*)'
       attributes: '*'
 
-# Flask (web server) options
+    - search_base: 'cn=snmp,cn=monitor'
+      search_scope: 'BASE'
+      search_filter: '(objectclass=*)'
+      attributes: '*'
+    
+    - search_base: 'cn=config,cn=ldbm database,cn=plugins,cn=config'
+      search_scope: 'BASE'
+      search_filter: '(objectclass=*)'
+      attributes: '*'
+    
+    - search_base: 'cn=monitor,cn=ldbm database,cn=plugins,cn=config'
+      search_scope: 'BASE'
+      search_filter: '(objectclass=*)'
+      attributes: '*'
+
+    - search_base: 'cn=monitor,cn=ent-bretagne,cn=ldbm database,cn=plugins,cn=config'
+      search_scope: 'BASE'
+      search_filter: '(objectclass=*)'
+      attributes: '*'
+
+# Flask web server options (https://flask.palletsprojects.com/en/1.1.x/)
 flask:
   app:
-    port: 9325
+    port: 9745
     host: 'localhost'
-    debug: True
+    debug: False
 
 
+# Prometheus data exporter (https://prometheus.io)
 prometheus:
   metrics:
-    - name: 'cn=monitor'
+    - name: 'ldap_monitor'
+      search_base: 'cn=monitor'
       mono_values:
-        counters_help_label: "Compteur depuis le monitoring général"
-        counters:
+        counter_help_label: "Compteur depuis le monitoring général"
+        counter:
         - 'bytessent'
         - 'entriessent'
         - 'opscompleted'
         - 'opsinitiated'
         - 'totalconnections'
-        
-        gauges_help_label: "Jauges depuis le monitoring général"
-        gauges:
+        gauge_help_label: "Jauges depuis le monitoring général"
+        gauge:
         - 'cache-avail-bytes'
         - 'connectionpeak'
         - 'currentconnections'
@@ -52,3 +73,66 @@ prometheus:
         - 'readwaiters'
         - 'request-que-backlog'
         - 'threads'
+
+    - name: 'ldap_snmp_monitor'
+      search_base: 'cn=snmp,cn=monitor'
+      mono_values:
+        counter_help_label: 'Compteurs du monitoring SNMP'
+        counter:
+        - addentryops
+        - anonymousbinds
+        - bindsecurityerrors
+        - bytesrecv
+        - bytessent
+        # - cacheentries
+        # - cachehits
+        - chainings
+        - compareops
+        - connections
+        - connectionseq
+        # - copyentries
+        - entriesreturned
+        - errors
+        - inops
+        - listops
+        # - masterentries
+        - modifyentryops
+        - modifyrdnops
+        - onelevelsearchops
+        - readops
+        - referrals
+        - referralsreturned
+        - removeentryops
+        - searchops
+        - securityerrors
+        - simpleauthbinds
+        # - slavehits
+        - strongauthbinds
+        - unauthbinds
+        - wholesubtreesearchops
+
+    - name: 'ldap_ldbm_plugins_config'
+      search_base: 'cn=config,cn=ldbm database,cn=plugins,cn=config'
+      mono_values:
+        gauge_help_label: 'Config de la BDD LDBM'
+        gauge:
+        - nsslapd-db-checkpoint-interval
+        - nsslapd-dbcachesize
+        - nsslapd-disk-full-threshold
+        - nsslapd-disk-low-threshold
+        - nsslapd-import-cachesize
+        - nsslapd-lookthroughlimit
+        - nsslapd-allidsthreshold
+
+    - name: 'ldap_ldbm_plugins_monitor'
+      search_base: 'cn=monitor,cn=ldbm database,cn=plugins,cn=config'
+      mono_values:
+        counter_help_label: 'Compteurs du monitoring de la BDD LDBM'
+        counter:
+        - dbcachehitratio
+        - dbcachehits
+        - dbcachepagein
+        - dbcachepageout
+        - dbcacheroevict
+        - dbcacherwevict
+        - dbcachetries

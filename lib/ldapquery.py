@@ -13,18 +13,21 @@ class LdapQuery:
         self.connection.bind()
 
     def fetch(self):
+        formattedMetrics = ""
+        for search in self.config['ldap3']['search']:
+            self.connection.search(**search)
+            attributesText = (dict(self.connection.response[0]['attributes']))
+            print(self.connection.response[0]['dn'])
+            searchBase = search['search_base']
+            formattedMetrics += self.formatAttributes(attributesText, searchBase)
         
-        self.connection.search(**self.config['ldap3']['search'][0])
-        attributesText = (dict(self.connection.response[0]['attributes']))
-        attributeDName = self.connection.response[0]['dn']
-        formattedMetrics = self.formatAttributes(attributesText, attributeDName)
         return formattedMetrics
 
-    def formatAttributes(self, attributesText, attributeDName):
+    def formatAttributes(self, attributesText, searchBase):
 
         metrics = self.config['prometheus']['metrics']
         for configMetric in metrics:
-            if configMetric['name'] == attributeDName:
+            if configMetric['search_base'] == searchBase:
                 
                formattedValues = formatValues(configMetric, attributesText)
 
@@ -36,28 +39,32 @@ def formatValues(configMetric, attributesText):
     beautifulMetric = ""
     if configMetric['mono_values']:
 
-        mono_values = configMetric['mono_values']
-        if 'counters' in mono_values:
+        monoValues = configMetric['mono_values']
+        if 'counter' in monoValues:
+            beautifulMetric += formatMonoValues(monoValues, attributesText, configMetric['name'], 'counter')
 
-            if 'counters_help_label' in mono_values:
-                beautifulMetric += "# HELP {} {}\n".format(configMetric['name'], mono_values['counters_help_label'])
+        if 'gauge' in monoValues:
+            beautifulMetric += formatMonoValues(monoValues, attributesText, configMetric['name'], 'gauge')
 
-            beautifulMetric += "# TYPE {} counter\n".format(configMetric['name'])
-            for counter in mono_values['counters']:
-
-                beautifulMetric += "{}{{{}}} {}\n".format(configMetric['name'], counter, attributesText[counter][0])
-
-        if 'gauges' in mono_values:
-
-            if 'gauges_help_label' in mono_values:
-                beautifulMetric += "# HELP {} {}\n".format(configMetric['name'], mono_values['gauges_help_label'])
-
-            beautifulMetric += "# TYPE {} gauge\n".format(configMetric['name'])
-            for gauge in mono_values['gauges']:
-
-                beautifulMetric += "{}{{{}}} {}\n".format(configMetric['name'], gauge, attributesText[gauge][0])
-
-
-            
-    print(configMetric, attributesText)
+#    print(configMetric, attributesText)
     return beautifulMetric
+
+def formatMonoValues(monoValues, attributesText, name, valueType):
+
+    metricsOut = ""
+    if valueType + '_help_label' in monoValues:
+        metricsOut += "# HELP {} {}\n".format(name, monoValues[valueType + '_help_label'])
+
+    metricsOut += "# TYPE {} {}\n".format(name, valueType)
+
+    for counter in monoValues[valueType]:
+        if isinstance(attributesText[counter], list):
+            metricsOut += "{}{{label={}}} {}\n".format(name, counter, attributesText[counter][0])
+        else:
+            metricsOut += "{}{{label={}}} {}\n".format(name, counter, attributesText[counter])
+
+    return metricsOut
+
+    
+
+
