@@ -1,6 +1,7 @@
 # ldap_exporter.py (WIP)
 
 Simple Prometheus exporter for LDAP written in Python3
+License : Apache 2.0 http://www.apache.org/licenses/
 
 # Prerequisite
 
