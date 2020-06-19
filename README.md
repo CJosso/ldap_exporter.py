@@ -1,6 +1,6 @@
 # ldap_exporter.py (WIP)
 
-Simple Prometheus exporter for LDAP written in Python3
+Simple Prometheus exporter for LDAP written in Python3 \
 License : Apache 2.0 http://www.apache.org/licenses/
 
 # Prerequisite
@@ -14,8 +14,9 @@ Only counter and gauge are supported
 
 # Dependencies
 
-- Flask (https://flask.palletsprojects.com)
-- ldap3 (https://pypi.org/project/ldap3/)
+- Flask - https://flask.palletsprojects.com
+- ldap3 - https://pypi.org/project/ldap3
+- PyYAML - https://pyyaml.org
 
 # Install
 
@@ -27,7 +28,9 @@ pip install -r requirements.txt
 
 # Launch
 
-` # python app.py `
+` # python app.py`
+
+Deamonizing ability through [gunicorn](https://gunicorn.org/)
 
 # Usage
 
