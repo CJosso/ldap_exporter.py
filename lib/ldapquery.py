@@ -57,9 +57,9 @@ def formatMonoValues(monoValues, attributesText, name, valueType):
 
     for counter in monoValues[valueType]:
         if isinstance(attributesText[counter], list):
-            metricsOut += "{}{{label={}}} {}\n".format(name, counter, attributesText[counter][0])
+            metricsOut += '{}{{label="{}"}} {}\n'.format(name, counter, attributesText[counter][0])
         else:
-            metricsOut += "{}{{label={}}} {}\n".format(name, counter, attributesText[counter])
+            metricsOut += '{}{{label="{}"}} {}\n'.format(name, counter, attributesText[counter])
 
     return metricsOut
 
