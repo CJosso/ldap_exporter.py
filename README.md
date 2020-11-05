@@ -1,4 +1,4 @@
-# ldap_exporter.py (WIP)
+# ldap_exporter.py
 
 Simple Prometheus exporter for LDAP written in Python3 \
 License : Apache 2.0 http://www.apache.org/licenses/
@@ -18,11 +18,14 @@ Only counter and gauge are supported
 - ldap3 - https://pypi.org/project/ldap3
 - PyYAML - https://pyyaml.org
 
-# Install
+# Install (with virtualenv)
 
 ```
+cd /opt
 git clone https://github.com/CJosso/ldap_exporter.py.git
 cd ldap_exporter.py
+python3 -m venv venv-exporter-py
+source venv-exporter-py/bin/activate
 pip install -r requirements.txt
 ```
 
