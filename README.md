@@ -35,6 +35,11 @@ pip install -r requirements.txt
 
 Deamonizing ability through [gunicorn](https://gunicorn.org/)
 
+## Init example
+
+### Sysv 
+ `# cp examples/ldap-exporter-sysv.conf /etc/init/`
+
 # Usage
 
 Create a config.yml file from example-config.yml
