@@ -1,4 +1,4 @@
-rom flask import Flask
+from flask import Flask
 from lib.ldapquery import LdapQuery
 import yaml
 from os import path
