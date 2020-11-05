@@ -1,7 +1,7 @@
-from flask import Flask
+rom flask import Flask
 from lib.ldapquery import LdapQuery
-from os import path
 import yaml
+from os import path
 
 app = Flask('Ldap_exporter')
 configFile = path.join(app.root_path, 'config.yml')

@@ -28,7 +28,7 @@ pip install -r requirements.txt
 
 # Launch
 
-` # python app.py`
+` # python ldap_exporter.py`
 
 Deamonizing ability through [gunicorn](https://gunicorn.org/)
 
